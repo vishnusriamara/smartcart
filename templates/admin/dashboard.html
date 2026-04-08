@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h3 class="mb-4">📊 Admin Dashboard</h3>
+
+<div class="row g-4">
+
+  <div class="col-md-4">
+    <div class="card shadow border-0 text-center p-4">
+      <h6 class="text-muted">Total Products</h6>
+      <h2 class="text-primary">{{ total_products }}</h2>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow border-0 text-center p-4">
+      <h6 class="text-muted">Total Orders</h6>
+      <h2 class="text-success">{{ total_orders }}</h2>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow border-0 text-center p-4">
+      <h6 class="text-muted">Revenue</h6>
+      <h2 class="text-danger">₹{{ revenue }}</h2>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

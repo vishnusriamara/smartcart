@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow p-4">
+
+            <h3 class="mb-3">📦 Order #{{ order.order_id }}</h3>
+
+            <p><strong>Payment:</strong> 
+                <span class="badge bg-success">{{ order.payment_status }}</span>
+            </p>
+
+            <p><strong>Total Amount:</strong> ₹{{ order.amount }}</p>
+
+            <p><strong>Status:</strong> 
+            <span class="badge 
+            {% if order.order_status == 'Delivered' %}
+                bg-success
+            {% elif order.order_status == 'Shipped' %}
+                bg-primary
+            {% elif order.order_status == 'Pending' %}
+                bg-warning text-dark
+            {% elif order.order_status == 'Confirmed' %}
+                bg-info text-dark
+            {% elif order.order_status == 'Packed' %}
+                bg-secondary
+            {% else %}
+                bg-dark
+            {% endif %}
+            ">
+            {{ order.order_status }}
+            </span>
+            </p>
+
+            <hr>
+
+            <h5>🔄 Update Order Status</h5>
+
+            <form method="POST" action="/admin/update-order-status/{{ order.order_id }}" class="d-flex gap-2">
+
+                <select name="status" class="form-select">
+                    <option value="Pending" {% if order.order_status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Confirmed" {% if order.order_status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                    <option value="Packed" {% if order.order_status == 'Packed' %}selected{% endif %}>Packed</option>
+                    <option value="Shipped {% if order.order_status == 'Shipped' %}selected{% endif %}">Shipped</option>
+                    <option value="Delivered {% if order.order_status == 'Delivered' %}selected{% endif %}">Delivered</option>
+                </select>
+
+                <button type="submit" class="btn btn-success">
+                    Update
+                </button>
+
+            </form>
+
+            <hr>
+
+            <h5>🛒 Order Items</h5>
+
+            <div class="table-responsive">
+                <table class="table table-bordered mt-3">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for it in items %}
+                        <tr>
+                            <td>{{ it.product_name }}</td>
+                            <td>{{ it.quantity }}</td>
+                            <td>₹{{ it.price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

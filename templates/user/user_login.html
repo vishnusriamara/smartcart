@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card shadow-sm p-4">
+
+            <h4 class="text-center mb-3">User Login</h4>
+
+
+            <form method="POST" action="/user-login">
+
+                <input type="email" name="email" 
+                       class="form-control mb-3" 
+                       placeholder="Enter Email" required>
+
+                <input type="password" name="password" 
+                       class="form-control mb-3" 
+                       placeholder="Enter Password" required>
+
+                <button class="btn btn-primary w-100">
+                    Login
+                </button>
+
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="/user-register">Create Account</a> |
+                <a href="/user-forgot-password">Forgot Password?</a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

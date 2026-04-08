@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}All Products{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>📦 Product Management</h3>
+  <a href="/admin/add-item" class="btn btn-success">➕ Add Product</a>
+</div>
+
+<!-- Search + Filter -->
+<form method="GET" action="/admin/item-list" class="row g-2 mb-4">
+
+  <div class="col-md-4">
+    <input type="text" name="search" class="form-control"
+           placeholder="Search product..."
+           value="{{ request.args.get('search','') }}">
+  </div>
+
+  <div class="col-md-3">
+    <select name="category" class="form-select">
+      <option value="">All Categories</option>
+      {% for cat in categories %}
+      <option value="{{ cat.category }}"
+      {% if request.args.get('category')==cat.category %}selected{% endif %}>
+        {{ cat.category }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <button class="btn btn-primary w-100">Filter</button>
+  </div>
+
+</form>
+
+<!-- Product Table -->
+<div class="card shadow border-0">
+  <div class="card-body table-responsive">
+
+    <table class="table table-hover align-middle">
+
+      <thead class="table-dark">
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for product in products %}
+        <tr>
+
+          <td>
+            <img src="/static/uploads/product_images/{{product.image}}"
+                 class="rounded shadow"
+                 style="width:60px; height:60px; object-fit:cover;">
+          </td>
+
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>₹{{ product.price }}</td>
+
+          <td class="text-center">
+            <a href="/admin/view-item/{{product.product_id}}" class="btn btn-info btn-sm">View</a>
+            <a href="/admin/update-item/{{product.product_id}}" class="btn btn-warning btn-sm">Edit</a>
+
+            <a href="/admin/delete-item/{{product.product_id}}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Delete this product?')">
+               Delete
+            </a>
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm p-4 text-center">
+
+    <h3>Complete Your Payment</h3>
+
+    <p class="mt-3 fs-5">Total Amount: <strong>₹{{ amount }}</strong></p>
+
+    <div class="mb-3 text-start">
+    <label><strong>Delivery Address</strong></label>
+    <textarea id="address" class="form-control" 
+              placeholder="Enter your delivery address" required></textarea>
+    </div>      
+
+    <button id="rzp-button" class="btn btn-success mt-3">
+        Pay Now
+    </button>
+
+</div>
+
+<!-- Razorpay -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "{{ key_id }}",
+    "amount": "{{ amount * 100 }}",
+    "currency": "INR",
+    "name": "SmartCart",
+    "description": "Order Payment",
+    "order_id": "{{ order_id }}",
+
+    "handler": function (response){
+
+    var address = document.getElementById("address").value;
+
+    if(address.trim() === ""){
+        alert("Please enter delivery address!");
+        return;
+    }
+
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/verify-payment";
+
+    var fields = {
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_signature: response.razorpay_signature,
+        address: address   // ✅ ADD THIS
+    };
+
+    for (var name in fields) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = fields[name];
+        form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+};
+
+var rzp = new Razorpay(options);
+document.getElementById('rzp-button').onclick = function(e){
+
+    var address = document.getElementById("address").value;
+
+    if(address.trim() === ""){
+        alert("Please enter delivery address!");
+        e.preventDefault();
+        return;
+    }
+
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock %}

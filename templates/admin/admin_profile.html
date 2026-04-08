@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Admin Profile{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card shadow-lg border-0 text-center p-4">
+
+      <!-- Profile Image -->
+      <img src="/static/uploads/admin_profiles/{{ admin.profile_image }}" 
+           class="rounded-circle mx-auto mb-3 shadow"
+           style="width:120px; height:120px; object-fit:cover;">
+
+      <h5 class="mb-3">{{ admin.name }}</h5>
+
+      <form method="POST" enctype="multipart/form-data">
+
+        <div class="mb-2">
+          <input type="text" name="name" value="{{ admin.name }}" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+          <input type="email" name="email" value="{{ admin.email }}" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+          <input type="password" name="password" placeholder="New Password" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <input type="file" name="profile_image" class="form-control">
+        </div>
+
+        <button class="btn btn-primary w-100">Update Profile</button>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

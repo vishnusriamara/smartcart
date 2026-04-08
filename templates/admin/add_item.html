@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-dark text-white">
+      <h4 class="mb-0">➕ Add New Product</h4>
+    </div>
+
+    <div class="card-body p-4">
+
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      <form method="POST" enctype="multipart/form-data">
+
+        <div class="mb-3">
+          <label class="form-label">Product Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Enter product name" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea name="description" rows="3" class="form-control" placeholder="Enter product description" required></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Category</label>
+            <input type="text" name="category" class="form-control" placeholder="Eg: Electronics" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Price (₹)</label>
+            <input type="number" name="price" class="form-control" placeholder="Enter price" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Product Image</label>
+          <input type="file" name="images" class="form-control" multiple required>
+        </div>
+
+        <!-- Image Preview -->
+        <div class="mb-3 text-center">
+          <img id="preview" src="" class="img-fluid rounded shadow" style="max-height:200px; display:none;">
+        </div>
+
+        <button class="btn btn-success w-100">
+          ➕ Add Product
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Image Preview Script -->
+<script>
+document.querySelector('input[name="image"]').addEventListener('change', function(e){
+    const file = e.target.files[0];
+    if(file){
+        const preview = document.getElementById('preview');
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    }
+});
+</script>
+
+{% endblock %}

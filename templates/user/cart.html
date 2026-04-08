@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Your Cart</h3>
+
+{% if not cart %}
+<p>Cart is empty</p>
+{% else %}
+
+{% for pid, item in cart.items() %}
+<div class="card shadow-sm mb-3 p-3 d-flex flex-row justify-content-between align-items-center">
+
+    <div class="d-flex align-items-center">
+        <img src="/static/uploads/product_images/{{ item.image }}" width="80" class="rounded">
+        
+        <div class="ms-3">
+            <h6>{{ item.name }}</h6>
+            <p class="mb-0 text-muted">₹{{ item.price }}</p>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="/user/cart/decrease/{{ pid }}" class="btn btn-sm btn-outline-dark">-</a>
+        <span class="mx-2">{{ item.quantity }}</span>
+        <a href="/user/cart/increase/{{ pid }}" class="btn btn-sm btn-outline-dark">+</a>
+    </div>
+
+    <div>
+        <strong>₹{{ item.price * item.quantity }}</strong>
+    </div>
+
+    <a href="/user/cart/remove/{{ pid }}" class="btn btn-danger btn-sm">
+        Remove
+    </a>
+
+</div>
+{% endfor %}
+
+<h4>Total: ₹{{ grand_total }}</h4>
+
+<a href="/user/pay" class="btn btn-success">Proceed to Pay</a>
+
+{% endif %}
+
+{% endblock %}
