@@ -4,30 +4,35 @@
 
 {% block content %}
 
+<div class="container py-4 py-md-5">
+
 <h3 class="mb-4">📦 All Customer Orders</h3>
 
-<div class="card shadow p-3">
+<div class="card shadow border-0 rounded-4 p-3">
     <div class="table-responsive">
 
         <table class="table table-hover align-middle">
-            <thead class="table-light">
+
+            <thead class="table-dark text-center">
                 <tr>
                     <th>Order ID</th>
                     <th>User</th>
                     <th>Amount</th>
                     <th>Payment</th>
                     <th>Status</th>
-                    <th>Date</th>
+                    <th class="d-none d-md-table-cell">Date</th>
                     <th>View</th>
                 </tr>
             </thead>
 
             <tbody>
                 {% for order in orders %}
-                <tr>
-                    <td>#{{ order.order_id }}</td>
+                <tr class="text-center">
+
+                    <td class="fw-semibold">#{{ order.order_id }}</td>
                     <td>{{ order.username }}</td>
-                    <td>₹{{ order.amount }}</td>
+
+                    <td class="text-success fw-bold">₹{{ order.amount }}</td>
 
                     <td>
                         <span class="badge 
@@ -46,13 +51,14 @@
                         </span>
                     </td>
 
-                    <td>{{ order.created_at }}</td>
+                    <td class="d-none d-md-table-cell">{{ order.created_at }}</td>
 
                     <td>
                         <a class="btn btn-sm btn-primary" href="/admin/order/{{ order.order_id }}">
                             View
                         </a>
                     </td>
+
                 </tr>
                 {% endfor %}
             </tbody>
@@ -60,6 +66,8 @@
         </table>
 
     </div>
+</div>
+
 </div>
 
 {% endblock %}

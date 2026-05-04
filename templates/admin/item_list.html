@@ -3,22 +3,24 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3>📦 Product Management</h3>
+<div class="container py-4 py-md-5">
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+  <h3 class="mb-2 mb-md-0">📦 Product Management</h3>
   <a href="/admin/add-item" class="btn btn-success">➕ Add Product</a>
 </div>
 
 <!-- Search + Filter -->
 <form method="GET" action="/admin/item-list" class="row g-2 mb-4">
 
-  <div class="col-md-4">
-    <input type="text" name="search" class="form-control"
+  <div class="col-12 col-md-4">
+    <input type="text" name="search" class="form-control form-control-lg"
            placeholder="Search product..."
            value="{{ request.args.get('search','') }}">
   </div>
 
-  <div class="col-md-3">
-    <select name="category" class="form-select">
+  <div class="col-12 col-md-3">
+    <select name="category" class="form-select form-select-lg">
       <option value="">All Categories</option>
       {% for cat in categories %}
       <option value="{{ cat.category }}"
@@ -29,31 +31,32 @@
     </select>
   </div>
 
-  <div class="col-md-2">
-    <button class="btn btn-primary w-100">Filter</button>
+  <div class="col-12 col-md-2">
+    <button class="btn btn-primary w-100 btn-lg">Filter</button>
   </div>
 
 </form>
 
-<!-- Product Table -->
-<div class="card shadow border-0">
+<!-- Table -->
+<div class="card shadow border-0 rounded-4">
   <div class="card-body table-responsive">
 
     <table class="table table-hover align-middle">
 
-      <thead class="table-dark">
+      <thead class="table-dark text-center">
         <tr>
           <th>Image</th>
           <th>Name</th>
-          <th>Category</th>
+          <th class="d-none d-md-table-cell">Category</th>
           <th>Price</th>
-          <th class="text-center">Actions</th>
+          <th class="d-none d-lg-table-cell">Admin ID</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
       <tbody>
         {% for product in products %}
-        <tr>
+        <tr class="text-center">
 
           <td>
             <img src="/static/uploads/product_images/{{product.image}}"
@@ -61,19 +64,25 @@
                  style="width:60px; height:60px; object-fit:cover;">
           </td>
 
-          <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
-          <td>₹{{ product.price }}</td>
+          <td class="fw-semibold">{{ product.name }}</td>
 
-          <td class="text-center">
-            <a href="/admin/view-item/{{product.product_id}}" class="btn btn-info btn-sm">View</a>
-            <a href="/admin/update-item/{{product.product_id}}" class="btn btn-warning btn-sm">Edit</a>
+          <td class="d-none d-md-table-cell">{{ product.category }}</td>
 
-            <a href="/admin/delete-item/{{product.product_id}}"
-               class="btn btn-danger btn-sm"
-               onclick="return confirm('Delete this product?')">
-               Delete
-            </a>
+          <td class="text-success fw-bold">₹{{ product.price }}</td>
+
+          <td class="d-none d-lg-table-cell">{{product.admin_id}}</td>
+
+          <td>
+            <div class="d-flex flex-wrap justify-content-center gap-1">
+              <a href="/admin/view-item/{{product.product_id}}" class="btn btn-info btn-sm">View</a>
+              <a href="/admin/update-item/{{product.product_id}}" class="btn btn-warning btn-sm">Edit</a>
+
+              <a href="/admin/delete-item/{{product.product_id}}"
+                 class="btn btn-danger btn-sm"
+                 onclick="return confirm('Delete this product?')">
+                 Delete
+              </a>
+            </div>
           </td>
 
         </tr>
@@ -83,6 +92,8 @@
     </table>
 
   </div>
+</div>
+
 </div>
 
 {% endblock %}

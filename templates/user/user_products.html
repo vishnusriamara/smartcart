@@ -1,26 +1,24 @@
 {% extends 'base.html' %}
-
 {% block title %}Products{% endblock %}
 
 {% block content %}
 
-<h4 class="mb-3">🛍️ All Products</h4>
+<div class="container py-4">
 
-<!-- 🔍 SEARCH + CATEGORY FILTER -->
+<h4 class="mb-4">🛍️ All Products</h4>
+
 <form method="GET" action="/user/products" class="mb-4">
 
-    <div class="row">
+    <div class="row g-2">
 
-        <!-- 🔍 Search -->
-        <div class="col-md-4 mb-2">
+        <div class="col-12 col-md-4">
             <input type="text" name="search" class="form-control"
                    placeholder="Search products..."
                    value="{{ request.args.get('search', '') }}">
         </div>
 
-        <!-- 📂 Category -->
-        <div class="col-md-4 mb-2">
-            <select name="category" class="form-control">
+        <div class="col-12 col-md-4">
+            <select name="category" class="form-select">
                 <option value="">All Categories</option>
 
                 {% for cat in categories %}
@@ -32,28 +30,24 @@
             </select>
         </div>
 
-        <!-- 🔘 Button -->
-        <div class="col-md-4 mb-2">
-            <button type="submit" class="btn btn-primary w-100">
-                Search / Filter
-            </button>
+        <div class="col-12 col-md-4">
+            <button class="btn btn-primary w-100">Search / Filter</button>
         </div>
 
     </div>
 
 </form>
 
-<!-- 🧾 PRODUCTS GRID -->
 <div class="row">
 
-{% if products|length > 0 %}
+{% if products %}
 
     {% for product in products %}
-    <div class="col-md-3 col-sm-6 mb-4">
+    <div class="col-6 col-md-4 col-lg-3 mb-4">
 
-        <div class="card product-card p-3 text-center shadow-sm h-100">
+        <div class="card h-100 text-center shadow-sm border-0 rounded-4 p-3">
 
-            <img src="/static/uploads/product_images/{{ product.image or 'default.png' }}" 
+            <img src="/static/uploads/product_images/{{ product.image or 'default.png' }}"
                  style="height:180px; object-fit:contain;">
 
             <h6 class="mt-2">{{ product.name }}</h6>
@@ -62,12 +56,12 @@
             <h5 class="text-success">₹{{ product.price }}</h5>
 
             <div class="mt-auto">
-                <a href="/user/product/{{ product.product_id }}" 
+                <a href="/user/product/{{ product.product_id }}"
                    class="btn btn-primary btn-sm w-100 mb-2">
                    View Details
                 </a>
 
-                <a href="/user/add-to-cart/{{ product.product_id }}" 
+                <a href="/user/add-to-cart/{{ product.product_id }}"
                    class="btn btn-outline-dark btn-sm w-100">
                    Add to Cart
                 </a>
@@ -80,15 +74,16 @@
 
 {% else %}
 
-    <!-- ❌ No Products -->
-    <div class="col-12 text-center mt-5">
-        <div class="card p-4 shadow-sm border-0">
-            <h4 class="text-muted">😔 No Products Found</h4>
-            <p class="text-secondary">Try different search or category</p>
-        </div>
+<div class="col-12 text-center mt-5">
+    <div class="card p-4 shadow-sm border-0">
+        <h4 class="text-muted">😔 No Products Found</h4>
+        <p>Try different search or category</p>
     </div>
+</div>
 
 {% endif %}
+
+</div>
 
 </div>
 

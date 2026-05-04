@@ -1,12 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartCart-Home</title>
-</head>
-<body>
-    <h1>Welcome to SmartCart</h1>
-    <p>Flask project setup successful!</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}SmartCart - Home{% endblock %}
+
+{% block content %}
+
+<!-- 🔥 HERO SECTION -->
+<div class="p-5 mb-5 text-white rounded-4"
+     style="background: linear-gradient(135deg, #0d6efd, #6610f2);">
+
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">🛒 SmartCart</h1>
+        <p class="lead mt-3">
+            Your complete eCommerce solution built with Flask
+        </p>
+
+        <div class="mt-4">
+            <a href="/user-register" class="btn btn-warning btn-lg me-2 shadow">
+                Get Started
+            </a>
+            <a href="/user-login" class="btn btn-light btn-lg shadow">
+                Login
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 🔷 FEATURES -->
+<div class="container py-4">
+    <div class="row text-center g-4">
+
+        <div class="col-md-3">
+            <div class="p-3 shadow-sm rounded-4 h-100 feature-box">
+                <i class="fa fa-search fa-2x mb-2 text-primary"></i>
+                <h6>Smart Search</h6>
+                <p>Find products instantly</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 shadow-sm rounded-4 h-100 feature-box">
+                <i class="fa fa-cart-plus fa-2x mb-2 text-success"></i>
+                <h6>Add to Cart</h6>
+                <p>Easy cart management</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 shadow-sm rounded-4 h-100 feature-box">
+                <i class="fa fa-credit-card fa-2x mb-2 text-danger"></i>
+                <h6>Secure Payment</h6>
+                <p>Razorpay integration</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 shadow-sm rounded-4 h-100 feature-box">
+                <i class="fa fa-user-shield fa-2x mb-2 text-warning"></i>
+                <h6>Admin Control</h6>
+                <p>Role-based access</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- 🔷 ROLES -->
+<div class="container py-5">
+    <h3 class="text-center mb-4">👥 Platform Roles</h3>
+
+    <div class="row g-4 text-center">
+
+        <div class="col-md-4">
+            <div class="card p-3 border-primary rounded-4 shadow-sm">
+                <h5>👤 User</h5>
+                <p>Browse, cart, and order products</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 border-success rounded-4 shadow-sm">
+                <h5>👨‍💼 Admin</h5>
+                <p>Manage products and orders</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 border-warning rounded-4 shadow-sm">
+                <h5>⚡ Super Admin</h5>
+                <p>Full system control</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 FINAL CTA -->
+<div class="text-center py-5">
+    <h4>🚀 Start Shopping Today</h4>
+    <a href="/user-register" class="btn btn-primary btn-lg mt-3 shadow">
+        Create Account
+    </a>
+</div>
+
+<!-- 🔥 CUSTOM STYLES -->
+<style>
+.feature-box:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
+}
+</style>
+
+{% endblock %}

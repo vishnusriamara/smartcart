@@ -19,12 +19,80 @@
         html,
         body {
             height: 100%;
-            margin: 0;
         }
 
         body {
             display: flex;
             flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #0d6efd;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .navbar-brand:hover {
+            color: #ffc107;
+        }
+
+        /* Category Scroll */
+        .category-bar {
+            background: #f8f9fa;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 8px;
+        }
+
+        .category-item {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 6px 12px;
+            background: #fff;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            border: 1px solid #ddd;
+        }
+
+        .category-item:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #212529;
+            color: #fff;
+            padding: 15px;
+            margin-top: auto;
+        }
+
+        /* Mobile Fixes */
+        @media (max-width: 768px) {
+            .navbar form {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .navbar .btn {
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            .category-item {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
         }
     </style>
 
@@ -37,86 +105,99 @@
     <nav class="navbar navbar-expand-lg px-3">
 
         <!-- Logo -->
-        <a class="navbar-brand" href="/">
-            🛒 SmartCart
-        </a>
+        <a class="navbar-brand" href="/">🛒 SmartCart</a>
 
-        <!-- USER SEARCH BAR -->
-        {% if session.get('user_id') %}
-        <form class="d-flex mx-3" action="/user/products">
-            <input class="form-control" type="search" name="search" placeholder="Search products...">
-            <button class="btn btn-light ms-1">🔍</button>
-        </form>
-        {% endif %}
+        <!-- Toggle Button (Mobile) -->
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="ms-auto d-flex align-items-center gap-2">
+        <div class="collapse navbar-collapse" id="navbarContent">
 
-            <!-- ================= ADMIN ================= -->
-            {% if session.get('admin_id') %}
-
-            <span class="text-white">Admin: {{ session.get('admin_name') }}</span>
-
-            <a href="/admin-dashboard" class="btn btn-light btn-sm">Dashboard</a>
-            <a href="/admin/item-list" class="btn btn-light btn-sm">Products</a>
-            <a href="/admin/profile" class="btn btn-light btn-sm">Profile</a>
-
-            <!-- ✅ ADD HERE -->
-            {% if session.get('admin_role') == 'super_admin' %}
-            <a href="/add-admin" class="btn btn-warning btn-sm">Add Admin</a>
+            <!-- USER SEARCH BAR -->
+            {% if session.get('user_id') %}
+            <form class="d-flex ms-lg-3 my-2 my-lg-0" action="/user/products">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search products...">
+                <button class="btn btn-light">🔍</button>
+            </form>
             {% endif %}
 
-            <a href="/admin-logout" class="btn btn-danger btn-sm">Logout</a>
+            <div class="ms-auto d-flex flex-column flex-lg-row align-items-lg-center gap-2">
 
-            <!-- ================= USER ================= -->
-            {% elif session.get('user_id') %}
+                <!-- ================= ADMIN ================= -->
+                {% if session.get('admin_id') %}
 
-            <span class="text-white">Hi, {{ session.get('user_name') }}</span>
+                <span class="text-white">👨‍💼 {{ session.get('admin_name') }}</span>
 
-            <a href="/user/cart" class="btn btn-light btn-sm">
-                🛒 ({{ session.get('cart')|length if session.get('cart') else 0 }})
-            </a>
-            <a href="/user-dashboard" class="btn btn-light btn-sm">Dashboard</a>
-            <a href="/user/my-orders" class="btn btn-light btn-sm">Orders</a>
-            <a href="/user-logout" class="btn btn-danger btn-sm">Logout</a>
+                <a href="/admin-dashboard" class="btn btn-light btn-sm">Dashboard</a>
+                <a href="/admin/item-list" class="btn btn-light btn-sm">Products</a>
+                <a href="/admin/profile" class="btn btn-light btn-sm">Profile</a>
 
-            <!-- ================= GUEST (NOT LOGGED IN) ================= -->
-            {% else %}
+                {% if session.get('admin_role') == 'super_admin' %}
+                <div class="dropdown">
+                    <button class="btn btn-warning btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                        ⚡ Super Admin
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/add-admin">➕ Add Admin</a></li>
+                        <li><a class="dropdown-item" href="/superadmin/admins">Manage Admins</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#">⚠️ System Control</a></li>
+                    </ul>
+                </div>
+                {% endif %}
 
-            <!-- USER LOGIN -->
-            <a href="/user-login" class="btn btn-light btn-sm">User Login</a>
-            <a href="/user-register" class="btn btn-warning btn-sm">User Signup</a>
+                <a href="/admin-logout" class="btn btn-danger btn-sm">Logout</a>
 
-            <!-- ADMIN LOGIN -->
-            <a href="/admin-login" class="btn btn-outline-light btn-sm">Admin Login</a>
-            <a href="/admin-signup" class="btn btn-dark btn-sm">Admin Signup</a>
+                <!-- ================= USER ================= -->
+                {% elif session.get('user_id') %}
 
+                <span class="text-white">Hi, {{ session.get('user_name') }}</span>
 
-            {% endif %}
+                <a href="/user/cart" class="btn btn-light btn-sm">
+                    🛒 ({{ session.get('cart')|length if session.get('cart') else 0 }})
+                </a>
+                <a href="/user-dashboard" class="btn btn-light btn-sm">Dashboard</a>
+                <a href="/user/my-orders" class="btn btn-light btn-sm">Orders</a>
+                <a href="/user-logout" class="btn btn-danger btn-sm">Logout</a>
+
+                <!-- ================= GUEST ================= -->
+                {% else %}
+
+                <a href="/user-login" class="btn btn-light btn-sm">User Login</a>
+                <a href="/user-register" class="btn btn-warning btn-sm">User Sign Up</a>
+                <a href="/admin-login" class="btn btn-outline-light btn-sm">Admin Login</a>
+
+                {% endif %}
+
+            </div>
 
         </div>
     </nav>
 
-    <!-- 🔷 CATEGORY BAR (ONLY USER) -->
-    {% if session.get('user_id') %}
+    <!-- 🔷 CATEGORY BAR -->
+    <!-- {% if session.get('user_id') %}
     <div class="category-bar">
         <marquee behavior="" direction="">
-        <div class="category-scroll">
-            <a href="#" class="category-item">📱 Mobiles</a>
-            <a href="#" class="category-item">👕 Fashion</a>
-            <a href="#" class="category-item">💻 Electronics</a>
-            <a href="#" class="category-item">🏠 Home</a>
-            <a href="#" class="category-item">🔌 Appliances</a>
-            <a href="#" class="category-item">✈️ Travel</a>
-            <a href="#" class="category-item">💄 Beauty</a>
-        </div>
+            <div class="category-scroll">
+                <a href="#" class="category-item">📱 Mobiles</a>
+                <a href="#" class="category-item">👕 Fashion</a>
+                <a href="#" class="category-item">💻 Electronics</a>
+                <a href="#" class="category-item">🏠 Home</a>
+                <a href="#" class="category-item">🔌 Appliances</a>
+                <a href="#" class="category-item">✈️ Travel</a>
+                <a href="#" class="category-item">💄 Beauty</a>
+            </div>
         </marquee>
     </div>
-    {% endif %}
+
+    {% endif %} -->
 
     <!-- 🔷 CONTENT -->
     <div class="main-content container mt-4">
 
-        
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

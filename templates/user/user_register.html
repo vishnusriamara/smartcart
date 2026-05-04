@@ -1,40 +1,44 @@
 {% extends 'base.html' %}
-
 {% block title %}Register{% endblock %}
 
 {% block content %}
 
+<div class="container py-5">
 <div class="row justify-content-center">
-    <div class="col-md-5">
+<div class="col-12 col-sm-10 col-md-6 col-lg-4">
 
-        <div class="card shadow-sm p-4">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
 
-            <h4 class="text-center mb-3">Create Account</h4>
+        <h4 class="text-center mb-3">📝 Create Account</h4>
 
+        <form method="POST" action="/user-register">
 
-            <form method="POST" action="/user-register">
-
+            <div class="mb-3">
                 <input type="text" name="name" 
-                       class="form-control mb-3" 
+                       class="form-control form-control-lg" 
                        placeholder="Enter Name" required>
-
-                <input type="email" name="email" 
-                       class="form-control mb-3" 
-                       placeholder="Enter Email" required>
-
-                <button class="btn btn-primary w-100">
-                    Send OTP
-                </button>
-
-            </form>
-
-            <div class="text-center mt-3">
-                <a href="/user-login">Already have an account? Login</a>
             </div>
 
+            <div class="mb-3">
+                <input type="email" name="email" 
+                       class="form-control form-control-lg" 
+                       placeholder="Enter Email" required>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2">
+                Send OTP
+            </button>
+
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/user-login">Already have an account? Login</a>
         </div>
 
     </div>
+
+</div>
+</div>
 </div>
 
 {% endblock %}

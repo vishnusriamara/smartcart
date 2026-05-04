@@ -3,13 +3,14 @@
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-5">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
 
-      <div class="card shadow-lg border-0">
-        <div class="card-header bg-primary text-white text-center">
-          <h4>Admin Login</h4>
+      <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h4 class="mb-0">Admin Login</h4>
         </div>
 
         <div class="card-body p-4">
@@ -17,25 +18,26 @@
           <form method="POST" action="/admin-login">
 
             <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter email" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+              <label class="form-label fw-semibold">Password</label>
+              <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter password" required>
             </div>
 
-            <button class="btn btn-primary w-100">Login</button>
+            <button class="btn btn-primary w-100 py-2 fw-semibold">Login</button>
 
           </form>
 
-          <div class="d-flex justify-content-between mt-3">
-            <a href="/admin-forgot-password">Forgot Password?</a>
-            <a href="/admin-signup">Register</a>
+          <div class="d-flex flex-column flex-sm-row justify-content-between mt-3 text-center">
+            <a href="/admin-forgot-password" class="mb-2 mb-sm-0 text-decoration-none">Forgot Password?</a>
+            <a href="/admin-signup" class="text-decoration-none">Register</a>
           </div>
 
         </div>
+
       </div>
 
     </div>

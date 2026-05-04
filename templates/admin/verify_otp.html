@@ -3,37 +3,41 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-  <div class="col-md-5">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
 
-    <div class="card shadow border-0">
-      <div class="card-header bg-success text-white text-center">
-        <h4>🔐 Verify OTP</h4>
+      <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-success text-white text-center py-3">
+          <h4 class="mb-0">🔐 Verify OTP</h4>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+
+          <form method="POST" action="/verify-otp">
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Enter OTP</label>
+              <input type="text" name="otp" class="form-control form-control-lg" required>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Create Password</label>
+              <input type="password" name="password" class="form-control form-control-lg" required>
+            </div>
+
+            <button class="btn btn-success w-100 py-2 fw-semibold">
+              Verify & Register
+            </button>
+
+          </form>
+
+        </div>
+
       </div>
 
-      <div class="card-body p-4">
-
-        <form method="POST" action="/verify-otp">
-
-          <div class="mb-3">
-            <label>Enter OTP</label>
-            <input type="text" name="otp" class="form-control" required>
-          </div>
-
-          <div class="mb-3">
-            <label>Create Password</label>
-            <input type="password" name="password" class="form-control" required>
-          </div>
-
-          <button class="btn btn-success w-100">
-            Verify & Register
-          </button>
-
-        </form>
-
-      </div>
     </div>
-
   </div>
 </div>
 

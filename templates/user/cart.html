@@ -2,45 +2,72 @@
 
 {% block content %}
 
-<h3>Your Cart</h3>
+<div class="container py-4 py-md-5">
+
+<h3 class="mb-4">🛒 Your Cart</h3>
 
 {% if not cart %}
-<p>Cart is empty</p>
+<div class="text-center py-5">
+    <h5 class="text-muted">Your cart is empty</h5>
+    <a href="/user/products" class="btn btn-primary mt-3">Start Shopping</a>
+</div>
+
 {% else %}
 
 {% for pid, item in cart.items() %}
-<div class="card shadow-sm mb-3 p-3 d-flex flex-row justify-content-between align-items-center">
+<div class="card shadow-sm border-0 rounded-4 mb-3 p-3">
 
-    <div class="d-flex align-items-center">
-        <img src="/static/uploads/product_images/{{ item.image }}" width="80" class="rounded">
-        
-        <div class="ms-3">
-            <h6>{{ item.name }}</h6>
-            <p class="mb-0 text-muted">₹{{ item.price }}</p>
+    <div class="row align-items-center text-center text-md-start">
+
+        <!-- Image -->
+        <div class="col-12 col-md-2 mb-2 mb-md-0">
+            <img src="/static/uploads/product_images/{{ item.image }}" 
+                 class="img-fluid rounded" 
+                 style="height:80px; object-fit:cover;">
         </div>
-    </div>
 
-    <div class="text-center">
-        <a href="/user/cart/decrease/{{ pid }}" class="btn btn-sm btn-outline-dark">-</a>
-        <span class="mx-2">{{ item.quantity }}</span>
-        <a href="/user/cart/increase/{{ pid }}" class="btn btn-sm btn-outline-dark">+</a>
-    </div>
+        <!-- Details -->
+        <div class="col-12 col-md-4">
+            <h6 class="fw-semibold">{{ item.name }}</h6>
+            <p class="text-muted mb-0">₹{{ item.price }}</p>
+        </div>
 
-    <div>
-        <strong>₹{{ item.price * item.quantity }}</strong>
-    </div>
+        <!-- Quantity -->
+        <div class="col-12 col-md-3 my-2 my-md-0">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <a href="/user/cart/decrease/{{ pid }}" class="btn btn-outline-dark btn-sm">-</a>
+                <span class="fw-semibold">{{ item.quantity }}</span>
+                <a href="/user/cart/increase/{{ pid }}" class="btn btn-outline-dark btn-sm">+</a>
+            </div>
+        </div>
 
-    <a href="/user/cart/remove/{{ pid }}" class="btn btn-danger btn-sm">
-        Remove
-    </a>
+        <!-- Total -->
+        <div class="col-6 col-md-2">
+            <strong class="text-success">₹{{ item.price * item.quantity }}</strong>
+        </div>
+
+        <!-- Remove -->
+        <div class="col-6 col-md-1">
+            <a href="/user/cart/remove/{{ pid }}" 
+               class="btn btn-danger btn-sm w-100">
+               ✕
+            </a>
+        </div>
+
+    </div>
 
 </div>
 {% endfor %}
 
-<h4>Total: ₹{{ grand_total }}</h4>
-
-<a href="/user/pay" class="btn btn-success">Proceed to Pay</a>
+<div class="text-end mt-4">
+    <h4>Total: <span class="text-success">₹{{ grand_total }}</span></h4>
+    <a href="/user/pay" class="btn btn-success px-4 mt-2">
+        Proceed to Pay
+    </a>
+</div>
 
 {% endif %}
+
+</div>
 
 {% endblock %}

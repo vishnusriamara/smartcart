@@ -3,42 +3,51 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-  <div class="col-md-6">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-5">
 
-    <div class="card shadow-lg border-0 text-center p-4">
+      <div class="card shadow-lg border-0 rounded-4 text-center p-4 p-md-5">
 
-      <!-- Profile Image -->
-      <img src="/static/uploads/admin_profiles/{{ admin.profile_image }}" 
-           class="rounded-circle mx-auto mb-3 shadow"
-           style="width:120px; height:120px; object-fit:cover;">
+        <!-- Profile Image -->
+        <img src="/static/uploads/admin_profiles/{{ admin.profile_image }}" 
+             class="rounded-circle mx-auto mb-3 shadow"
+             style="width:120px; height:120px; object-fit:cover;">
 
-      <h5 class="mb-3">{{ admin.name }}</h5>
+        <h5 class="mb-4 fw-semibold">{{ admin.name }}</h5>
 
-      <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
 
-        <div class="mb-2">
-          <input type="text" name="name" value="{{ admin.name }}" class="form-control" required>
-        </div>
+          <div class="mb-3">
+            <input type="text" name="name" value="{{ admin.name }}" 
+                   class="form-control form-control-lg" required>
+          </div>
 
-        <div class="mb-2">
-          <input type="email" name="email" value="{{ admin.email }}" class="form-control" required>
-        </div>
+          <div class="mb-3">
+            <input type="email" name="email" value="{{ admin.email }}" 
+                   class="form-control form-control-lg" required>
+          </div>
 
-        <div class="mb-2">
-          <input type="password" name="password" placeholder="New Password" class="form-control">
-        </div>
+          <div class="mb-3">
+            <input type="password" name="password" 
+                   placeholder="New Password (optional)" 
+                   class="form-control form-control-lg">
+          </div>
 
-        <div class="mb-3">
-          <input type="file" name="profile_image" class="form-control">
-        </div>
+          <div class="mb-4">
+            <input type="file" name="profile_image" 
+                   class="form-control form-control-lg">
+          </div>
 
-        <button class="btn btn-primary w-100">Update Profile</button>
+          <button class="btn btn-primary w-100 py-2 fw-semibold">
+            Update Profile
+          </button>
 
-      </form>
+        </form>
+
+      </div>
 
     </div>
-
   </div>
 </div>
 

@@ -3,31 +3,45 @@
 
 {% block content %}
 
+<div class="container py-4 py-md-5">
+
 <h3 class="mb-4">📊 Admin Dashboard</h3>
 
 <div class="row g-4">
 
-  <div class="col-md-4">
-    <div class="card shadow border-0 text-center p-4">
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow border-0 rounded-4 text-center p-4 dashboard-card">
       <h6 class="text-muted">Total Products</h6>
-      <h2 class="text-primary">{{ total_products }}</h2>
+      <h2 class="text-primary fw-bold">{{ total_products }}</h2>
     </div>
   </div>
 
-  <div class="col-md-4">
-    <div class="card shadow border-0 text-center p-4">
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow border-0 rounded-4 text-center p-4 dashboard-card">
       <h6 class="text-muted">Total Orders</h6>
-      <h2 class="text-success">{{ total_orders }}</h2>
+      <h2 class="text-success fw-bold">{{ total_orders }}</h2>
     </div>
   </div>
 
-  <div class="col-md-4">
-    <div class="card shadow border-0 text-center p-4">
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow border-0 rounded-4 text-center p-4 dashboard-card">
       <h6 class="text-muted">Revenue</h6>
-      <h2 class="text-danger">₹{{ revenue }}</h2>
+      <h2 class="text-danger fw-bold">₹{{ revenue }}</h2>
     </div>
   </div>
 
 </div>
+
+</div>
+
+<style>
+.dashboard-card {
+    transition: all 0.3s ease;
+}
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+</style>
 
 {% endblock %}

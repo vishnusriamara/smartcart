@@ -1,48 +1,58 @@
 {% extends 'base.html' %}
-
 {% block title %}Home{% endblock %}
 
 {% block content %}
 
-<!-- HERO SECTION -->
-<div class="p-5 text-center bg-white rounded shadow-sm">
-    <h2>Welcome to SmartCart 🛒</h2>
-    <p>Best deals on electronics, fashion & more</p>
-    <a href="/user/products" class="btn btn-primary">Shop Now</a>
+<div class="container py-4">
+
+<!-- HERO -->
+<div class="p-5 text-center bg-white rounded-4 shadow-sm">
+    <h2 class="fw-bold">Welcome to SmartCart 🛒</h2>
+    <p class="text-muted">Best deals on electronics, fashion & more</p>
+    <a href="/user/products" class="btn btn-primary px-4">Shop Now</a>
 </div>
 
 <!-- TOP DEALS -->
 <div class="mt-5">
-    <h4 class="mb-3 text-center">🔥 Top Deals</h4>
+    <h4 class="mb-4 text-center">🔥 Top Deals</h4>
 
     <div class="row">
-        {% if products %}
-        {% for product in products[:4] %}
-        <div class="col-md-3">
-            <div class="card product-card p-3 text-center shadow-sm">
 
-                <img src="/static/uploads/product_images/{{ product.image }}" style="height:150px; object-fit:contain;">
+    {% if products %}
+        {% for product in products[:4] %}
+        <div class="col-6 col-md-4 col-lg-3 mb-4">
+
+            <div class="card product-card h-100 text-center shadow-sm border-0 rounded-4 p-3">
+
+                <img src="/static/uploads/product_images/{{ product.image }}"
+                     style="height:150px; object-fit:contain;">
 
                 <h6 class="mt-2">{{ product.name }}</h6>
                 <h5 class="text-success">₹{{ product.price }}</h5>
 
-                <a href="/user/product/{{ product.product_id }}" class="btn btn-outline-primary btn-sm mt-2">
+                <a href="/user/product/{{ product.product_id }}"
+                   class="btn btn-outline-primary btn-sm mt-auto">
                     View
                 </a>
 
             </div>
+
         </div>
         {% endfor %}
-        {% else %}
-        <div class="text-center mt-5">
+    {% else %}
+
+        <div class="col-12 text-center mt-4">
             <div class="card p-4 shadow-sm border-0">
                 <h4 class="text-muted">😔 No Products Available</h4>
-                <p class="text-secondary">Try searching something else or check back later</p>
-                <a href="/" class="btn btn-primary mt-2">🏠 Go Home</a>
+                <a href="/" class="btn btn-primary mt-2">Go Home</a>
             </div>
         </div>
-        {% endif %}
+
+    {% endif %}
+
     </div>
+</div>
+
 </div>
 
 {% endblock %}

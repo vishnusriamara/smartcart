@@ -217,3 +217,11 @@ a {
     background: #0d6efd;
     color: white;
 }
+
+.navbar {
+    background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+}
+
+.dropdown-menu {
+    border-radius: 10px;
+}

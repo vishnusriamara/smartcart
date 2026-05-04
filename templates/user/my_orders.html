@@ -1,44 +1,52 @@
 {% extends 'base.html' %}
-
 {% block title %}My Orders{% endblock %}
 
 {% block content %}
 
+<div class="container py-4 py-md-5">
+
 <h3 class="mb-4">📦 My Orders</h3>
 
 {% if orders|length == 0 %}
-    <div class="alert alert-info text-center">
-        You have not placed any orders yet.
-        <br><br>
-        <a href="/user/products" class="btn btn-primary">Start Shopping</a>
-    </div>
+<div class="alert alert-info text-center">
+    No orders yet 😕 <br><br>
+    <a href="/user/products" class="btn btn-primary">Start Shopping</a>
+</div>
 
 {% else %}
 
-    {% for order in orders %}
-    <div class="card shadow-sm mb-3 p-3">
+{% for order in orders %}
+<div class="card shadow-sm border-0 rounded-4 mb-3 p-3">
 
-        <h5>Order #{{ order.order_id }}</h5>
+    <div class="row align-items-center">
 
-        <p><strong>Amount:</strong> ₹{{ order.amount }}</p>
-        <p><strong>Status:</strong> 
+        <div class="col-md-6">
+            <h6>Order #{{ order.order_id }}</h6>
+            <p class="mb-1">₹{{ order.amount }}</p>
+            <p class="text-muted small">{{ order.created_at }}</p>
+        </div>
+
+        <div class="col-md-3 text-md-center my-2 my-md-0">
             <span class="badge bg-success">{{ order.payment_status }}</span>
-        </p>
-        <p><strong>Date:</strong> {{ order.created_at }}</p>
-        <p><strong>Address:</strong> {{ order.address }}</p>
+        </div>
 
-        <a href="/user/order-success/{{ order.order_id }}" 
-           class="btn btn-primary btn-sm">
-            View Details
-        </a>
+        <div class="col-md-3 text-md-end">
+            <a href="/user/order-success/{{ order.order_id }}" 
+               class="btn btn-primary btn-sm">View</a>
 
-        <a href="/user/download-invoice/{{ order.order_id }}" class="view-btn">
-            Download Invoice
-        </a>
+            <a href="/user/download-invoice/{{ order.order_id }}" 
+               class="btn btn-outline-dark btn-sm">
+               Invoice
+            </a>
+        </div>
 
     </div>
-    {% endfor %}
+
+</div>
+{% endfor %}
 
 {% endif %}
+
+</div>
 
 {% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Manage Admins{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="mb-4">👨‍💼 Admin Management</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center">
+                {% if admins %}
+                    {% for admin in admins %}
+                    <tr>
+                        <td>{{ admin.admin_id }}</td>
+                        <td>{{ admin.name }}</td>
+                        <td>{{ admin.email }}</td>
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                {{ admin.role }}
+                            </span>
+                        </td>
+                        <td>
+
+                            <!-- 🔍 View Products -->
+                            <a href="/superadmin/admin-products/{{ admin.admin_id }}"
+                               class="btn btn-sm btn-primary">
+                               Products
+                            </a>
+
+                            <!-- ❌ Delete -->
+                            <a href="/superadmin/delete-admin/{{ admin.admin_id }}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure to delete this admin?')">
+                               Delete
+                            </a>
+
+                            <a href="/superadmin/edit-admin/{{ admin.admin_id }}"
+                                class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-muted">
+                            No admins found
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+{% endblock %}
