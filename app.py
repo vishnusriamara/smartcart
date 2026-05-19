@@ -27,10 +27,13 @@ app.config['MAIL_PASSWORD']=config.MAIL_PASSWORD
 
 mail=Mail(app)
 s=URLSafeTimedSerializer(app.secret_key)
-UPLOAD_FOLDER='static/uploads/product_images'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static/uploads/product_images')
+ADMIN_UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static/uploads/admin_profiles')
+#UPLOAD_FOLDER='static/uploads/product_images'
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
-ADMIN_UPLOAD_FOLDER = 'static/uploads/admin_profiles'
+#ADMIN_UPLOAD_FOLDER = 'static/uploads/admin_profiles'
 app.config['ADMIN_UPLOAD_FOLDER'] = ADMIN_UPLOAD_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -44,7 +47,6 @@ os.makedirs(ADMIN_UPLOAD_FOLDER, exist_ok=True)
 #     conn.row_factory=sqlite3.Row
 #     return conn
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'smartcart.db')
 
 def get_db_connection():
@@ -122,7 +124,7 @@ def verify_otp_post():
         flash("invalid OTP. Try again!","danger")
         return redirect("/verify-otp")
 
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -169,7 +171,7 @@ def admin_login():
     # ✅ IMPORTANT: no encode
     stored_hashed_password = admin['password']
 
-    if not bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password):
+    if not bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
         flash("Incorrect password! Try again.","danger")
         return redirect('/admin-login')
 
@@ -233,7 +235,7 @@ def admin_reset_password(token):
         hashed_password = bcrypt.hashpw(
             new_password.encode('utf-8'),
             bcrypt.gensalt()
-        )
+        ).decode('utf-8')
 
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -621,7 +623,7 @@ def admin_profile_update():
 
     # Password update
     if new_password:
-        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     else:
         hashed_password = admin['password']
 
@@ -716,7 +718,7 @@ def verify_user_otp_post():
         flash("Invalid OTP. Try again!","danger")
         return redirect("/verify-user-otp")
 
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -758,7 +760,7 @@ def user_login():
         return redirect('/user-login')
 
     # ✅ IMPORTANT FIX (no encode here)
-    if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+    if not bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
         flash("Incorrect password!", "danger")
         return redirect('/user-login')
 
@@ -820,7 +822,7 @@ def user_reset_password(token):
         hashed_password = bcrypt.hashpw(
             new_password.encode('utf-8'),
             bcrypt.gensalt()
-        )
+        ).decode('utf-8')
 
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -881,7 +883,7 @@ def user_products():
     category_filter = request.args.get('category', '')
 
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
 
     # Fetch categories for filter dropdown
     cursor.execute("SELECT DISTINCT category FROM products")
@@ -1375,4 +1377,4 @@ def edit_admin(admin_id):
     return redirect('/superadmin/admins')
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
